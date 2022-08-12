@@ -1,11 +1,12 @@
 package command
 
 import (
+	"os"
+
 	"github.com/praveensanap/glox-interpreter/commands/clibag"
 	compileCmd "github.com/praveensanap/glox-interpreter/commands/compile"
 	"github.com/praveensanap/glox-interpreter/logger"
 	"github.com/spf13/cobra"
-	"os"
 )
 
 var Version = "0.0.1"

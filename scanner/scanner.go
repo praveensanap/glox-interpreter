@@ -1,13 +1,12 @@
 package scanner
 
 import (
-	"fmt"
 	"github.com/praveensanap/glox-interpreter/errors"
 )
 
 type scanner struct {
 	source  string
-	tokens  []*Token
+	tokens  []Token
 	start   int
 	current int
 	line    int
@@ -16,7 +15,7 @@ type scanner struct {
 func New(source string) *scanner {
 	return &scanner{
 		source: source,
-		tokens: []*Token{},
+		tokens: []Token{},
 		line:   1,
 	}
 }
@@ -27,14 +26,14 @@ func (s *scanner) ScanTokens() {
 		s.scanToken()
 	}
 	t := NewToken(EOF, "", nil, s.line)
-	s.tokens = append(s.tokens, &t)
-	fmt.Println(s.tokens)
+	s.tokens = append(s.tokens, t)
 }
 
 func (s *scanner) isEnd() bool {
 	return s.current >= len(s.source)
 }
 
+// return the current character and move one step
 func (s *scanner) advance() string {
 	c := s.source[s.current]
 	s.current += 1
@@ -44,7 +43,6 @@ func (s *scanner) advance() string {
 
 func (s *scanner) scanToken() {
 	c := s.advance()
-
 	switch c {
 	case "(":
 		s.addToken(LEFT_PAREN)
@@ -88,6 +86,6 @@ func (s *scanner) addToken(tokenType TokenType) {
 }
 func (s *scanner) addTokenWithLiteral(tokenType TokenType, literal interface{}) {
 	text := s.source[s.start:s.current]
-	t := NewToken(tokenType, text, nil, 0)
-	s.tokens = append(s.tokens, &t)
+	t := NewToken(tokenType, text, literal, s.line)
+	s.tokens = append(s.tokens, t)
 }

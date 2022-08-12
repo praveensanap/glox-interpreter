@@ -5,10 +5,7 @@ import (
 )
 
 type Bag struct {
-	//Config              *config.Config
-	ConfigPath          string
-	RefreshRepositories bool
-	//OutputFormatter     formatter.OutputFormatter
+	ConfigPath string
 }
 
 type CommandBuilder func(b *Bag) *cobra.Command

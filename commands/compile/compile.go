@@ -1,14 +1,10 @@
 package compile
 
 import (
-	"bufio"
-	"fmt"
 	"github.com/praveensanap/glox-interpreter/commands/clibag"
+	"github.com/praveensanap/glox-interpreter/compiler"
 	"github.com/praveensanap/glox-interpreter/logger"
-	"github.com/praveensanap/glox-interpreter/scanner"
 	"github.com/spf13/cobra"
-	"io/ioutil"
-	"os"
 )
 
 func NewCmd(b *clibag.Bag) *cobra.Command {
@@ -22,37 +18,10 @@ func NewCmd(b *clibag.Bag) *cobra.Command {
 				logger.Error("source file required")
 			}
 
-			if file != "" {
-				b, err := ioutil.ReadFile(file)
-				if err != nil {
-					panic(err)
-				}
-				fmt.Println(string(b))
-				run(string(b))
-			} else {
-				runPrompt()
-			}
+			compiler.Compile(file)
 			return nil
 		},
 	}
 	addSourceFileFlag(cmd)
 	return cmd
-}
-
-func runPrompt() {
-	reader := bufio.NewReader(os.Stdin)
-	for {
-		line, _, err := reader.ReadLine()
-		if err != nil || line == nil {
-			break
-		}
-		run(string(line))
-	}
-
-}
-
-func run(s string) {
-	scanne := scanner.New(s)
-	scanne.ScanTokens()
-	fmt.Println(s)
 }

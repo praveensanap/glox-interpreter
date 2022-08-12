@@ -59,7 +59,12 @@ type token struct {
 }
 
 func NewToken(type_ TokenType, lexeme string, literal interface{}, line int) Token {
-	return &token{}
+	return &token{
+		type_:   type_,
+		lexeme:  lexeme,
+		literal: literal,
+		line:    line,
+	}
 }
 
 func (t token) GetTokenType() TokenType {
