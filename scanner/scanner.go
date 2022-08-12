@@ -1,6 +1,7 @@
 package scanner
 
 import (
+	"fmt"
 	"github.com/praveensanap/glox-interpreter/errors"
 	"strconv"
 )
@@ -21,7 +22,7 @@ func New(source string) *scanner {
 	}
 }
 
-func (s *scanner) ScanTokens() {
+func (s *scanner) ScanTokens() []Token {
 	for !s.isEnd() {
 		// start is advanced here. implies scanToken should process the whole lexeme
 		s.start = s.current
@@ -29,6 +30,10 @@ func (s *scanner) ScanTokens() {
 	}
 	t := NewToken(EOF, "", nil, s.line)
 	s.tokens = append(s.tokens, t)
+	for _, t := range s.tokens {
+		fmt.Println(fmt.Sprintf("[line %d] %s %s %d", t.GetLine(), t.GetLexeme(), t.GetLiteral(), t.GetTokenType()))
+	}
+	return s.tokens
 }
 
 // process a complete lexeme

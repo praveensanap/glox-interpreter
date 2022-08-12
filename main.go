@@ -1,7 +1,15 @@
 package main
 
-import command "github.com/praveensanap/glox-interpreter/commands"
+import (
+	"github.com/praveensanap/glox-interpreter/compiler"
+	"os"
+)
 
 func main() {
-	command.Run()
+	args := os.Args[1:]
+	file := ""
+	if len(args) > 0 {
+		file = args[0]
+	}
+	compiler.Compile(file)
 }

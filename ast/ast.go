@@ -14,9 +14,9 @@ type ExprVisitor interface {
 }
 
 type BinaryExpr struct {
-	left     Expr
-	operator scanner.Token
-	right    Expr
+	Left     Expr
+	Operator scanner.Token
+	Right    Expr
 }
 
 func (b BinaryExpr) accept(visitor ExprVisitor) {
@@ -24,7 +24,7 @@ func (b BinaryExpr) accept(visitor ExprVisitor) {
 }
 
 type GroupingExpr struct {
-	expression Expr
+	Expression Expr
 }
 
 func (b GroupingExpr) accept(visitor ExprVisitor) {
@@ -32,7 +32,7 @@ func (b GroupingExpr) accept(visitor ExprVisitor) {
 }
 
 type LiteralExpr struct {
-	value interface{}
+	Value interface{}
 }
 
 func (b LiteralExpr) accept(visitor ExprVisitor) {
@@ -40,8 +40,8 @@ func (b LiteralExpr) accept(visitor ExprVisitor) {
 }
 
 type UnaryExpr struct {
-	operator scanner.Token
-	right    Expr
+	Operator scanner.Token
+	Right    Expr
 }
 
 func (b UnaryExpr) accept(visitor ExprVisitor) {
