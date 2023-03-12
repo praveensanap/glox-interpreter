@@ -89,7 +89,7 @@ func TestScanTokens(t *testing.T) {
 			},
 		},
 		{
-			name:   "identifier",
+			name:   "keywordOrIdentifier",
 			source: "x=1.2",
 			want: []Token{
 				NewToken(IDENTIFIER, "x", nil, 1),

@@ -22,11 +22,17 @@ func New(source string) *scanner {
 	}
 }
 
+// Called once to scan all tokens in scanner.source
+// Adds EOF token at the end
+
 func (s *scanner) ScanTokens() []Token {
+	// iterate through all characters in the source
 	for !s.isEnd() {
-		// start is advanced here. implies scanToken should process the whole lexeme
+		// start is advanced here. implies scanSingleTokenAndAdvance should process the whole lexeme
 		s.start = s.current
-		s.scanToken()
+
+		// process a token at a time and advance.
+		s.scanSingleTokenAndAdvance()
 	}
 	t := NewToken(EOF, "", nil, s.line)
 	s.tokens = append(s.tokens, t)
@@ -36,8 +42,19 @@ func (s *scanner) ScanTokens() []Token {
 	return s.tokens
 }
 
-// process a complete lexeme
-func (s *scanner) scanToken() {
+// Job is to identify a token in the grammar
+// Token identifies:
+// 1. single character token (){},;+-*
+// 2. two(one) character token  !, !=, =, ==, <, <=, >, >=
+// 3. block or line comments.
+// 4. ignores white space. advances line number for new line token.
+// 5. string literals that are enclosed in double quotes.
+// 6. number literals
+// 7. keyword
+// 8. identifier
+// Errors on invalid tokens.
+// each case advances the pointer to the start of next token.
+func (s *scanner) scanSingleTokenAndAdvance() {
 	c := s.advance()
 	switch c {
 	case '(':
@@ -117,7 +134,7 @@ func (s *scanner) scanToken() {
 		if isDigit(c) {
 			s.number()
 		} else if isAlpha(c) {
-			s.identifier()
+			s.keywordOrIdentifier()
 		} else {
 			errors.Error(s.line, "Unexpected character.")
 		}
@@ -135,12 +152,12 @@ func (s *scanner) addTokenWithLiteral(tokenType TokenType, literal interface{}) 
 	s.tokens = append(s.tokens, t)
 }
 
-// source navigation
+// source navigation. checks if at the end
 func (s *scanner) isEnd() bool {
 	return s.current >= len(s.source)
 }
 
-// return the current character and move one step
+// source navigation. return the current character and move one step
 func (s *scanner) advance() uint8 {
 	c := s.source[s.current]
 	s.current += 1
@@ -159,6 +176,7 @@ func (s *scanner) match(expected uint8) bool {
 	return true
 }
 
+// advance if current string matches with expected.
 func (s *scanner) matchString(expected string) bool {
 	if s.isEnd() {
 		return false
@@ -266,7 +284,7 @@ func (s *scanner) number() {
 
 }
 
-func (s *scanner) identifier() {
+func (s *scanner) keywordOrIdentifier() {
 	for isAlphaNumeric(s.peek()) {
 		s.advance()
 	}
