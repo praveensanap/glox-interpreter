@@ -1,49 +1,50 @@
-package ast
+package ast;
 
-import "github.com/praveensanap/glox-interpreter/scanner"
+import "github.com/praveensanap/glox-interpreter/scanner";
 
 type Expr interface {
-	accept(visitor ExprVisitor)
+	Accept(visitor  ExprVisitor) interface{}
 }
 
 type ExprVisitor interface {
-	VisitBinaryExpr(BinaryExpr)
-	VisitGroupingExpr(GroupingExpr)
-	VisitLiteralExpr(LiteralExpr)
-	VisitUnaryExpr(UnaryExpr)
+	VisitBinaryExpr (BinaryExpr) interface{}
+	VisitGroupingExpr (GroupingExpr) interface{}
+	VisitLiteralExpr (LiteralExpr) interface{}
+	VisitUnaryExpr (UnaryExpr) interface{}
 }
 
 type BinaryExpr struct {
-	Left     Expr
+	Left Expr
 	Operator scanner.Token
-	Right    Expr
+	Right Expr
 }
 
-func (b BinaryExpr) accept(visitor ExprVisitor) {
-	visitor.VisitBinaryExpr(b)
+func (b BinaryExpr) Accept(visitor ExprVisitor) interface{} {
+	return visitor.VisitBinaryExpr(b)
 }
 
 type GroupingExpr struct {
 	Expression Expr
 }
 
-func (b GroupingExpr) accept(visitor ExprVisitor) {
-	visitor.VisitGroupingExpr(b)
+func (b GroupingExpr) Accept(visitor ExprVisitor) interface{} {
+	return visitor.VisitGroupingExpr(b)
 }
 
 type LiteralExpr struct {
 	Value interface{}
 }
 
-func (b LiteralExpr) accept(visitor ExprVisitor) {
-	visitor.VisitLiteralExpr(b)
+func (b LiteralExpr) Accept(visitor ExprVisitor) interface{} {
+	return visitor.VisitLiteralExpr(b)
 }
 
 type UnaryExpr struct {
 	Operator scanner.Token
-	Right    Expr
+	Right Expr
 }
 
-func (b UnaryExpr) accept(visitor ExprVisitor) {
-	visitor.VisitUnaryExpr(b)
+func (b UnaryExpr) Accept(visitor ExprVisitor) interface{} {
+	return visitor.VisitUnaryExpr(b)
 }
+
