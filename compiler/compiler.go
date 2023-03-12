@@ -51,6 +51,6 @@ func run(s string) {
 	}
 	p := ast.Printer{}
 	if expr != nil {
-		p.Print(expr)
+		fmt.Printf(p.Print(expr))
 	}
 }

@@ -37,7 +37,7 @@ func (s *scanner) ScanTokens() []Token {
 	t := NewToken(EOF, "", nil, s.line)
 	s.tokens = append(s.tokens, t)
 	for _, t := range s.tokens {
-		fmt.Println(fmt.Sprintf("[line %d] %s %s %d", t.GetLine(), t.GetLexeme(), t.GetLiteral(), t.GetTokenType()))
+		fmt.Println(fmt.Sprintf("[line %d] [lexeme %s] [literal %v] [token %v]", t.GetLine(), t.GetLexeme(), t.GetLiteral(), t.GetTokenType()))
 	}
 	return s.tokens
 }

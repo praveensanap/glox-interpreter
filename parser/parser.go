@@ -7,9 +7,7 @@ import (
 	"github.com/praveensanap/glox-interpreter/scanner"
 )
 
-// []Token -> SyntaxTree
-
-type Parse interface {
+type Parser interface {
 	Parse() (ast.Expr, error)
 }
 
@@ -18,7 +16,7 @@ type parser struct {
 	current int
 }
 
-func NewParser(tokens []scanner.Token) Parse {
+func NewParser(tokens []scanner.Token) Parser {
 	p := parser{
 		tokens:  tokens,
 		current: 0,
