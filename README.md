@@ -27,8 +27,15 @@ This code representation should not have behaviour attached to it. Hence we use 
 The ast-codegen package takes types that describe 
 The ast package represents the syntax tree of the source code.
 
-- [ ] Chapter 6: Parsing Expression. 
+- [x] Chapter 6: Parsing Expression. 
 The parser package parses the stream of tokens into an abstract syntax tree.
 GRAMMAR.md describes the grammar of the Lox language.
 Recursive descent parser (used by GCC, V8) is a top-down parser.
 Each rule in the grammar is a function in the parser package.
+
+- [x] Chapter 7: Evaluating Expressions.
+Executing the syntax tree of simple expressions.
+Using Java Object/Boxes types to hold Lox values.
+Translate to Java operations.
+The JVM takes care of memory management.
+

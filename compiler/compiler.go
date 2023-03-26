@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/praveensanap/glox-interpreter/ast"
 	"github.com/praveensanap/glox-interpreter/errors"
+	"github.com/praveensanap/glox-interpreter/eval"
 	"github.com/praveensanap/glox-interpreter/parser"
 	"github.com/praveensanap/glox-interpreter/scanner"
 	"os"
@@ -53,4 +54,7 @@ func run(s string) {
 	if expr != nil {
 		fmt.Printf(p.Print(expr))
 	}
+	fmt.Println("")
+	i := eval.NewInterpreter()
+	i.InterpretAndPrint(expr)
 }
